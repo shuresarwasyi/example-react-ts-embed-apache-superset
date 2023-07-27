@@ -1,0 +1,34 @@
+@config "../tailwind.config.js";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #00adcf;
+  --color-content-primary: #212324;
+  --color-content-secondary: #5f6368;
+  --line-height-heading: 1.25;
+  --line-height-content: 1.5;
+}
+html {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--background-color-primary);
+}
+body {
+  color: var(--color-content-primary);
+  line-height: var(--line-height-content);
+  font-weight: 400;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--line-height-heading);
+}

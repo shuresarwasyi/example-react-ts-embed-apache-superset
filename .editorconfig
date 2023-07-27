@@ -1,0 +1,50 @@
+# EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
+# For more information about the properties used in this file, please see the EditorConfig documentation: https://editorconfig.org/
+
+# Top-most EditorConfig file
+root = true
+
+# Unix-style newlines
+[*]
+end_of_line = LF
+
+# Set the charset encoding
+[*.md]
+charset = utf-8
+
+# Ignore generated files
+# Adjust this section based on your project's needs
+[dist]
+[build]
+[public]
+[node_modules]
+.cache/
+
+# JavaScript and TypeScript files
+# Adjust this section based on your project's needs
+[*.{js,jsx,ts,tsx}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# CSS, SCSS, and Less files
+# Adjust this section based on your project's needs
+[*.{css,scss,less}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# JSON files
+# Adjust this section based on your project's needs
+[*.{json}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Markdown files
+# Adjust this section based on your project's needs
+[*.md]
+trim_trailing_whitespace = true
