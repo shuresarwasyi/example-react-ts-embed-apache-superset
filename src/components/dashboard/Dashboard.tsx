@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useEffect, useRef, useState } from "react";
 
 import { embedDashboard } from "@superset-ui/embedded-sdk";
-import { DashboardAccount } from "../../entities/Dashboard";
+
 import dashboardConfig from "../../config/dashboard";
 
 interface DashboardProps {
@@ -18,16 +18,13 @@ const createAPIInstance = (): AxiosInstance => {
   });
 };
 
-const getAccessToken = async (
-  api: AxiosInstance,
-  account: DashboardAccount
-): Promise<string> => {
+const getAccessToken = async (api: AxiosInstance): Promise<string> => {
   const configRequestAccessToken: AxiosRequestConfig = {
     method: "post",
     url: "/api/v1/security/login",
     data: {
-      username: account.username,
-      password: account.password,
+      username: dashboardConfig.account.username,
+      password: dashboardConfig.account.password,
       provider: "db",
       refresh: false,
     },
@@ -104,10 +101,7 @@ const useGuestToken = (dashboardID: DashboardProps["dashboardID"]) => {
         if (!isFetched.current) {
           isFetched.current = true;
           const api = createAPIInstance();
-          const accessToken = await getAccessToken(
-            api,
-            dashboardConfig.account
-          );
+          const accessToken = await getAccessToken(api);
           const csrfToken = await getCSRFToken(api, accessToken);
           const guestToken = await getGuestToken(
             api,
@@ -126,7 +120,7 @@ const useGuestToken = (dashboardID: DashboardProps["dashboardID"]) => {
     };
 
     fetchTokens();
-  }, [dashboardConfig.account]);
+  });
 
   return { guestToken, loading };
 };
