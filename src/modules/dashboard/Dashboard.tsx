@@ -2,9 +2,7 @@ import { Helmet } from "react-helmet-async";
 
 import Dashboard from "../../components/dashboard/Dashboard";
 
-const dashboardID: string = "13cd005c-bcb5-4295-84ef-08deca900263";
-// const dashboardID: string = "cfaf34d4-52cf-4e9e-a692-59b38c416f9a";
-// const dashboardID: string = "a0495ee3-d16b-499a-9251-30553bcb2532";
+const dashboardID = "e3cc1942-ed4d-4e2d-992d-011c8b3d8430";
 
 /**
  * Home component representing the home page.
@@ -14,7 +12,7 @@ const DashboardPage = (): React.JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>Home Page | Vite Modular App</title>
+        <title>Dashboard Page | Vite Modular App</title>
       </Helmet>
       <Dashboard dashboardID={dashboardID} />
     </>

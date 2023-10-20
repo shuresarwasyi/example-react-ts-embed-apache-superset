@@ -37,29 +37,9 @@ const getAccessToken = async (api: AxiosInstance): Promise<string> => {
   return responseAccessToken.data.access_token;
 };
 
-const getCSRFToken = async (
-  api: AxiosInstance,
-  accessToken: string
-): Promise<string> => {
-  const configRequestCSRFToken: AxiosRequestConfig = {
-    method: "GET",
-    url: "api/v1/security/csrf_token",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  const responseCSRFToken: AxiosResponse = await api.request(
-    configRequestCSRFToken
-  );
-
-  return responseCSRFToken.data.result;
-};
-
 const getGuestToken = async (
   api: AxiosInstance,
   accessToken: string,
-  csrfToken: string,
   dashboardID: string
 ): Promise<string> => {
   const configRequestGuestToken: AxiosRequestConfig = {
@@ -67,7 +47,6 @@ const getGuestToken = async (
     url: "api/v1/security/guest_token",
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      "X-CSRF-Token": csrfToken,
     },
     data: {
       user: {
@@ -102,13 +81,7 @@ const useGuestToken = (dashboardID: DashboardProps["dashboardID"]) => {
           isFetched.current = true;
           const api = createAPIInstance();
           const accessToken = await getAccessToken(api);
-          const csrfToken = await getCSRFToken(api, accessToken);
-          const guestToken = await getGuestToken(
-            api,
-            accessToken,
-            csrfToken,
-            dashboardID
-          );
+          const guestToken = await getGuestToken(api, accessToken, dashboardID);
 
           setGuestToken(guestToken);
           setLoading(false);
@@ -133,14 +106,15 @@ const Dashboard: React.FC<DashboardProps> = ({ dashboardID }) => {
       embedDashboard({
         id: dashboardID,
         supersetDomain: dashboardConfig.baseURL,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         mountPoint: document.getElementById("dashboardEl")!,
         fetchGuestToken: async () => guestToken,
         dashboardUiConfig: {
-          hideTitle: false,
+          hideTitle: true,
         },
       });
     }
-  }, [guestToken]);
+  }, [dashboardID, guestToken]);
 
   return (
     <div id="dashboardEl" className="dash-container">
